@@ -3,6 +3,7 @@ import './chatList.css'
 export default function ChatList() {
 
     const [addMode, setAddMode] = useState(false)
+
     return (
         <div className='chatList'>
             <div className='search'>
