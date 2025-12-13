@@ -3,14 +3,14 @@ import './chat.css'
 import { useState } from 'react';
 
 const Chat = () => {
-    const [open,setOpen] = useState(false)
-    const [text,setText] = useState("")
+    const [open, setOpen] = useState(false)
+    const [text, setText] = useState("")
 
     const handleEmoji = e => {
-        console.log(e);
+        setText(previous => previous + e.emoji)
+        setOpen(false)
     }
 
-        console.log(text);
 
     return (
         <div className='chat'>
@@ -35,10 +35,13 @@ const Chat = () => {
                     <img src="./camera.png" alt="" />
                     <img src="./mic.png" alt="" />
                 </div>
-                <input type="text" placeholder='Type a message...' onChange={e=>setText(e.target.value)}/>
+                <input type="text" value={text} placeholder='Type a message...' onChange={e => setText(e.target.value)} />
                 <div className="emoji">
-                    <img src="./emoji.png" alt="" onClick={()=> setOpen((prev)=>!prev)}/>
-                    <EmojiPicker open={open} onEmojiClick={handleEmoji}/>
+                    <img src="./emoji.png" alt="" onClick={() => setOpen((prev) => !prev)} />
+
+                    <div className="picker">
+                        <EmojiPicker open={open} onEmojiClick={handleEmoji} />
+                    </div>
                 </div>
                 <button className='sendButton'>Send</button>
             </div>
