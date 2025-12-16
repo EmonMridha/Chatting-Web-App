@@ -27,8 +27,10 @@ const Login = () => {
         const { username, email, password } = Object.fromEntries(formData) // Here all the form data in an object
 
         try {
+            // Sending data for authentication
             const res = await createUserWithEmailAndPassword(auth, email, password)
 
+            // Storing user info in firestore database
             await setDoc(doc(db, 'users', res.user.uid), {
                 username,
                 email,

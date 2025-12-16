@@ -6,25 +6,27 @@ import Login from "./components/login/Login"
 import Notificatiion from "./components/notification/Notificatiion"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "./lib/firebase"
+import { useUserStore } from "./lib/userStore"
 
 const App = () => {
 
-
+  const { currentUser, fetchUserInfo } = useUserStore()
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
+      fetchUserInfo(user?.uid)
 
 
     })
 
     return unSubscribe
-  }, [])
+  }, [fetchUserInfo])
+
 
   return (
     <div className='container'>
       {
-        user ? (<>
+        currentUser ? (<>
           <List></List>
           <Chat></Chat>
           <Detail></Detail>
