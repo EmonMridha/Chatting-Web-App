@@ -11,12 +11,12 @@ export default function ChatList() {
     const { currentUser } = useUserStore();
 
     useEffect(() => {
-        const unSub = onSnapshot(doc(db, 'userChats', currentUser.id), async (res) => {
-            const items = doc.data().chats;
+        const unSub = onSnapshot(doc(db, 'userchats', currentUser.id), async (res) => { // keep watching this document. Whenever ANYTHING changes, sends the latest data in 'res'
+            const items = res.data().chats; 
 
             const promises = items.map(async (item) => {
                 const userDocRef = doc(db, 'users', item.receiverId);
-                const userDocSnap = await getDoc(userDocRef);
+                const userDocSnap = await getDoc(userDocRef); // Fetching the user document
 
                 const user = userDocSnap.data()
 
@@ -44,15 +44,15 @@ export default function ChatList() {
             </div>
 
             {
-                chats.map((chat) => {
+                chats.map((chat) => (
                     <div key={chat.chatId} className="item">
                         <img src='./avatar.png' alt='' />
                         <div className="texts">
-                            <span>Jane Doe</span>
+                            <span>{chat.user.username}</span>
                             <p>{chat.lastMessage}</p>
                         </div>
                     </div>
-                })
+                ))
             }
 
 
